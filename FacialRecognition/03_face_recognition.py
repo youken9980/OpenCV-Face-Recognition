@@ -1,8 +1,9 @@
 ''''
 Real Time Face Recogition
-	==> Each face stored on dataset/ dir, should have a unique numeric integer ID as 1, 2, 3, etc                       
-	==> LBPH computed model (trained faces) should be on trainer/ dir
-Based on original code by Anirban Kar: https://github.com/thecodacus/Face-Recognition    
+    ==> Each face stored on dataset/ dir, should have a unique numeric integer ID as 1, 2, 3, etc
+    ==> LBPH computed model (trained faces) should be on trainer/ dir
+
+Based on original code by Anirban Kar: https://github.com/thecodacus/Face-Recognition
 
 Developed by Marcelo Rovai - MJRoBot.org @ 21Feb18  
 
@@ -10,7 +11,7 @@ Developed by Marcelo Rovai - MJRoBot.org @ 21Feb18
 
 import cv2
 import numpy as np
-import os 
+import os
 
 recognizer = cv2.face.LBPHFaceRecognizer_create()
 recognizer.read('trainer/trainer.yml')
@@ -22,8 +23,8 @@ font = cv2.FONT_HERSHEY_SIMPLEX
 #iniciate id counter
 id = 0
 
-# names related to ids: example ==> Marcelo: id=1,  etc
-names = ['None', 'Marcelo', 'Paula', 'Ilza', 'Z', 'W'] 
+# names related to ids: example ==> Marcelo: id=1, etc
+names = ['None', 'Marcelo', 'Paula', 'Ilza', 'Z', 'W']
 
 # Initialize and start realtime video capture
 cam = cv2.VideoCapture(0)
@@ -37,7 +38,7 @@ minH = 0.1*cam.get(4)
 while True:
 
     ret, img =cam.read()
-    img = cv2.flip(img, -1) # Flip vertically
+    img = cv2.flip(img, 1) # Flip vertically
 
     gray = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
 
@@ -54,7 +55,7 @@ while True:
 
         id, confidence = recognizer.predict(gray[y:y+h,x:x+w])
 
-        # Check if confidence is less them 100 ==> "0" is perfect match 
+        # Check if confidence is less them 100 ==> "0" is perfect match
         if (confidence < 100):
             id = names[id]
             confidence = "  {0}%".format(round(100 - confidence))
@@ -63,7 +64,7 @@ while True:
             confidence = "  {0}%".format(round(100 - confidence))
         
         cv2.putText(img, str(id), (x+5,y-5), font, 1, (255,255,255), 2)
-        cv2.putText(img, str(confidence), (x+5,y+h-5), font, 1, (255,255,0), 1)  
+        cv2.putText(img, str(confidence), (x+5,y+h-5), font, 1, (255,255,0), 1)
     
     cv2.imshow('camera',img) 
 
