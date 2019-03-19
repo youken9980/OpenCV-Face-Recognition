@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+#coding=utf-8
 '''
 Haar Cascade Face and Smile detection with OpenCV
 
