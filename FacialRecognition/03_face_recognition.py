@@ -27,10 +27,13 @@ id = 0
 # names related to ids: example ==> Marcelo: id=1, etc
 names = ['None', 'Marcelo', 'Paula', 'Ilza', 'Z', 'W']
 
+# 参数1：字体文件路径，参数2：字体大小
+font = ImageFont.truetype("CascadiaCode.ttf", 20, encoding="utf-8")
+
 # Initialize and start realtime video capture
 cam = cv2.VideoCapture(0)
-cam.set(3, 640) # set video widht
-cam.set(4, 480) # set video height
+# cam.set(3, 640) # set video widht
+# cam.set(4, 480) # set video height
 
 # Define min window size to be recognized as a face
 minW = 0.1*cam.get(3)
@@ -67,8 +70,6 @@ while True:
         draw.line((x, y+h, x+w, y+h), (0,255,0))
         draw.line((x, y, x, y+h), (0,255,0))
         draw.line((x+w, y, x+w, y+h), (0,255,0))
-        # 参数1：字体文件路径，参数2：字体大小
-        font = ImageFont.truetype("msyh.ttf", 20, encoding="utf-8")
         # 参数1：打印坐标，参数2：文本，参数3：字体颜色，参数4：字体
         draw.text((x+5,y-25), str(id) + str(confidence), (255,255,255), font=font)
 
