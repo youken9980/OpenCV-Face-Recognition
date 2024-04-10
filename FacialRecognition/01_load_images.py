@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-#coding=utf-8
+# -*- coding:utf-8 -*-
+
 ''''
 Capture multiple Faces from multiple users to be stored on a DataBase (dataset directory)
     ==> Faces will be stored on a directory: dataset/ (if does not exist, pls create one)
@@ -8,7 +9,6 @@ Capture multiple Faces from multiple users to be stored on a DataBase (dataset d
 Based on original code by Anirban Kar: https://github.com/thecodacus/Face-Recognition
 
 Developed by Marcelo Rovai - MJRoBot.org @ 21Feb18
-
 '''
 
 import cv2

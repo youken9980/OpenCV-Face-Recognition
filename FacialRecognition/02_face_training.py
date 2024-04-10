@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-#coding=utf-8
+# -*- coding:utf-8 -*-
+
 ''''
 Training Multiple Faces stored on a DataBase:
     ==> Each face should have a unique numeric integer ID as 1, 2, 3, etc
@@ -8,8 +9,7 @@ Training Multiple Faces stored on a DataBase:
 
 Based on original code by Anirban Kar: https://github.com/thecodacus/Face-Recognition
 
-Developed by Marcelo Rovai - MJRoBot.org @ 21Feb18   
-
+Developed by Marcelo Rovai - MJRoBot.org @ 21Feb18
 '''
 
 import cv2
@@ -22,7 +22,7 @@ path = 'dataset'
 os.system("find " + path + " -name '.DS_Store' | xargs rm")
 
 recognizer = cv2.face.LBPHFaceRecognizer_create()
-detector = cv2.CascadeClassifier("haarcascade_frontalface_default.xml");
+detector = cv2.CascadeClassifier("haarcascade_frontalface_default.xml")
 
 # function to get the images and label data
 def getImagesAndLabels(path):

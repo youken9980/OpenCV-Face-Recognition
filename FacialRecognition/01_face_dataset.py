@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-#coding=utf-8
+# -*- coding:utf-8 -*-
+
 ''''
 Capture multiple Faces from multiple users to be stored on a DataBase (dataset directory)
     ==> Faces will be stored on a directory: dataset/ (if does not exist, pls create one)
@@ -8,12 +9,13 @@ Capture multiple Faces from multiple users to be stored on a DataBase (dataset d
 Based on original code by Anirban Kar: https://github.com/thecodacus/Face-Recognition
 
 Developed by Marcelo Rovai - MJRoBot.org @ 21Feb18
-
 '''
+
 import cv2
 import os
 
 cam = cv2.VideoCapture(0)
+# cam = cv2.VideoCapture("/Volumes/320G-134G/可爱晨 - 腐草为萤.mp4")
 cam.set(3, 640) # set video width
 cam.set(4, 480) # set video height
 
@@ -27,7 +29,6 @@ print("\n [INFO] Initializing face capture. Look the camera and wait ...")
 count = 0
 
 while(True):
-
     ret, img = cam.read()
     img = cv2.flip(img, 1) # flip video image vertically
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
@@ -43,8 +44,8 @@ while(True):
     k = cv2.waitKey(100) & 0xff # Press 'ESC' for exiting video
     if k == 27:
         break
-    elif count >= 100: # Take 30 face sample and stop video
-        break
+    # elif count >= 100: # Take 30 face sample and stop video
+    #     break
 
 # Do a bit of cleanup
 print("\n [INFO] Exiting Program and cleanup stuff")
