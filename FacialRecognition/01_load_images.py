@@ -14,7 +14,7 @@ Developed by Marcelo Rovai - MJRoBot.org @ 21Feb18
 import cv2
 import os
 
-img_src = "/Volumes/Destiny/tmp/dataset"
+img_src = "/Users/youken/Destiny/tmp/dataset"
 img_dest = "dataset"
 face_detector = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
 face_id = 0

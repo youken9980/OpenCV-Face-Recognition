@@ -18,7 +18,6 @@ from PIL import Image
 import os
 
 # Path for face image database
-# /Volumes/Destiny/tmp/
 path = 'dataset'
 os.system("find " + path + " -name '.DS_Store' | xargs rm")
 
@@ -35,7 +34,7 @@ def getImagesAndLabels(path):
         print(imagePath)
         PIL_img = Image.open(imagePath).convert('L') # convert it to grayscale
         img_numpy = np.array(PIL_img,'uint8')
-        id = int(os.path.split(imagePath)[-1].split(".")[2])
+        id = int(os.path.split(imagePath)[-1].split(".")[1])
         faces = detector.detectMultiScale(img_numpy)
         for (x,y,w,h) in faces:
             faceSamples.append(img_numpy[y:y+h,x:x+w])
