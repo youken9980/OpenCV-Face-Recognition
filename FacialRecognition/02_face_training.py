@@ -17,12 +17,14 @@ import numpy as np
 from PIL import Image
 import os
 
+
 # Path for face image database
 path = 'dataset'
 os.system("find " + path + " -name '.DS_Store' | xargs rm")
 
 recognizer = cv2.face.LBPHFaceRecognizer_create()
-detector = cv2.CascadeClassifier("haarcascade_frontalface_default.xml")
+detector = cv2.CascadeClassifier("cascade.xml")
+
 
 # function to get the images and label data
 def getImagesAndLabels(path):
@@ -41,6 +43,7 @@ def getImagesAndLabels(path):
             ids.append(id)
 
     return faceSamples,ids
+
 
 print ("\n [INFO] Training faces. It will take a few seconds. Wait ...")
 

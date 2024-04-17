@@ -1,0 +1,4 @@
+opencv-python < 4
+opencv-contrib-python < 4
+numpy
+pillow

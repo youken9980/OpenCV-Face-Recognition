@@ -14,40 +14,56 @@ Developed by Marcelo Rovai - MJRoBot.org @ 21Feb18
 import cv2
 import os
 
-cam = cv2.VideoCapture(0)
-# cam = cv2.VideoCapture("/Volumes/320G-134G/可爱晨 - 腐草为萤.mp4")
-cam.set(3, 640) # set video width
-cam.set(4, 480) # set video height
 
-face_detector = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
+face_detector = cv2.CascadeClassifier('cascade.xml')
 
-# For each person, enter one numeric face id
-face_id = input('\n enter user id end press <return> ==>  ')
 
-print("\n [INFO] Initializing face capture. Look the camera and wait ...")
-# Initialize individual sampling face count
-count = 0
+if __name__ == '__main__':
+    # cam = cv2.VideoCapture("*.mp4")
+    cam = cv2.VideoCapture(0)
+    cam.set(3, 960) # set video width
+    cam.set(4, 720) # set video height
 
-while(True):
-    ret, img = cam.read()
-    img = cv2.flip(img, 1) # flip video image vertically
-    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-    faces = face_detector.detectMultiScale(gray, 1.3, 5)
+    # For each person, enter one numeric face id
+    face_id = input('\n enter user id and press <return> ==>  ')
+    # Initialize individual sampling face count
+    seq = input('\n enter seq and press <return> ==>  ')
+    if not seq.strip():
+        count = 0
+    else:
+        count = int(seq)
 
-    for (x,y,w,h) in faces:
-        cv2.rectangle(img, (x,y), (x+w,y+h), (255,0,0), 2)
-        count += 1
-        # Save the captured image into the datasets folder
-        cv2.imwrite("dataset/User." + str(face_id) + '.' + str(count) + ".jpg", gray[y:y+h,x:x+w])
-        cv2.imshow('image', img)
+    print("\n [INFO] Initializing face capture. Look the camera and wait ...")
 
-    k = cv2.waitKey(100) & 0xff # Press 'ESC' for exiting video
-    if k == 27:
-        break
-    # elif count >= 100: # Take 30 face sample and stop video
-    #     break
+    try:
+        while(True):
+            ret, frame = cam.read()
+            if ret:
+                # frame = cv2.flip(frame, 1) # flip video image vertically
+                gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+                faces = face_detector.detectMultiScale(gray, 1.3, 5)
 
-# Do a bit of cleanup
-print("\n [INFO] Exiting Program and cleanup stuff")
-cam.release()
-cv2.destroyAllWindows()
+                for (x,y,w,h) in faces:
+                    cv2.rectangle(frame, (x,y), (x+w,y+h), (255,0,0), 2)
+                    count += 1
+                    # Save the captured image into the datasets folder
+                    cv2.imwrite("dataset/User." + str(face_id) + '.' + str(count) + ".jpg", gray[y:y+h,x:x+w])
+                    # 显示图像
+                    cv2.namedWindow('face_capture', cv2.WINDOW_KEEPRATIO)
+                    cv2.imshow('face_capture', frame)
+                    cv2.resizeWindow('face_capture', 960, 720)
+
+                k = cv2.waitKey(100) & 0xff # Press 'ESC' for exiting video
+                if k == 27:
+                    break
+                elif count >= 100: # Take 30 face sample and stop video
+                    break
+            else:
+                break
+    except Exception as e:
+        print(e)
+    finally:
+        # Do a bit of cleanup
+        print("\n [INFO] Exiting Program and cleanup stuff")
+        cam.release()
+        cv2.destroyAllWindows()

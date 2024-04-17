@@ -19,11 +19,11 @@ import os
 
 recognizer = cv2.face.LBPHFaceRecognizer_create()
 recognizer.read('trainer/trainer.yml')
-faceCascade = cv2.CascadeClassifier("haarcascade_frontalface_default.xml")
-fontSize = 25
+faceCascade = cv2.CascadeClassifier("cascade.xml")
+fontSize = 20
 font = ImageFont.truetype("/System/Library/Fonts/PingFang.ttc", fontSize, encoding="utf-8")
 # names related to ids: example ==> Marcelo: id=1, etc
-names = ['None', 'Marcelo', 'Paula', 'Ilza', 'Z', 'W']
+names = ['None', 'xxx']
 
 
 # 文字转换为图片并添加到图片上
@@ -40,7 +40,7 @@ def cv2ImgAddText(img, x,y,w,h, text, textColor=(255,255,255)):
     return cv2.cvtColor(np.asarray(img), cv2.COLOR_RGB2BGR)
 
 
-def detect_face(img):
+def detect_face(img, minSize):
     # img = cv2.flip(img, 1) # Flip vertically
     gray = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
     cv2img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB) # cv2和PIL中颜色的hex码的储存顺序不同
@@ -50,7 +50,7 @@ def detect_face(img):
         gray,
         scaleFactor = 1.2,
         minNeighbors = 5,
-        minSize = (int(minW), int(minH)),
+        minSize = minSize,
     )
 
     for(x,y,w,h) in faces:
@@ -68,23 +68,24 @@ def detect_face(img):
 
 if __name__ == '__main__':
     # 读取视频文件
-    # cam = cv2.VideoCapture("/Volumes/320G-134G/红尘客栈.mp4")
+    # cam = cv2.VideoCapture("*.mp4")
     # 读取视频流
     # cam = cv2.VideoCapture('rtmp://')
 
-    # Initialize and start realtime video capture
+    # # Initialize and start realtime video capture
     cam = cv2.VideoCapture(0)
     cam.set(3, 960) # set video width
     cam.set(4, 720) # set video height
-    # Define min window size to be recognized as a face
+    # # Define min window size to be recognized as a face
     minW = 0.1*cam.get(3)
     minH = 0.1*cam.get(4)
+    minSize = (int(minW), int(minH))
 
     try:
         while True:
             ret, frame = cam.read()
             if ret:
-                cv2charimg = detect_face(frame)
+                cv2charimg = detect_face(frame, minSize)
                 cv2.namedWindow('face_recognition', cv2.WINDOW_KEEPRATIO)
                 cv2.imshow('face_recognition', cv2charimg)
                 cv2.resizeWindow('face_recognition', 960, 720)
@@ -92,6 +93,8 @@ if __name__ == '__main__':
                 k = cv2.waitKey(100) & 0xff # Press 'ESC' for exiting video
                 if k == 27:
                     break
+            else:
+                break
     except Exception as e:
         print(e)
     finally:

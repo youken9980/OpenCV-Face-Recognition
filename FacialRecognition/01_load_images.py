@@ -14,11 +14,13 @@ Developed by Marcelo Rovai - MJRoBot.org @ 21Feb18
 import cv2
 import os
 
-img_src = "/Users/youken/Destiny/tmp/dataset"
+
+img_src = "local_path"
 img_dest = "dataset"
-face_detector = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
+face_detector = cv2.CascadeClassifier('cascade.xml')
 face_id = 0
 names = ['None']
+
 
 def del_file(path):
     ls = os.listdir(path)
@@ -29,8 +31,10 @@ def del_file(path):
         else:
             os.remove(c_path)
 
+
 del_file(img_dest)
 os.system("find " + img_src + " -name '.DS_Store' | xargs rm")
+
 
 for folder in [os.path.join(img_src,f) for f in os.listdir(img_src)]:
     if os.path.isfile(folder):
@@ -40,7 +44,6 @@ for folder in [os.path.join(img_src,f) for f in os.listdir(img_src)]:
 
     # 扫描图片源目录下所有子目录
     for file in [os.path.join(folder,f) for f in os.listdir(folder)]:
-        print(file)
         img = cv2.imread(file)
         gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
         faces = face_detector.detectMultiScale(gray, 1.3, 5)
